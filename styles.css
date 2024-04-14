@@ -1,0 +1,140 @@
+
+html, body, header, main, footer, nav {
+  margin: 0;
+  padding: 0;
+}
+
+/* Setting default font */
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* Header styles */
+header {
+  background-color: blue; /* Dark blue color */
+  color:White; /* White text */
+  padding: 20px;
+}
+
+header img {
+  width: 20%;
+  height: 20%;
+  margin-right: 20px;
+}
+
+header h1 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+header p {
+  font-size: 18px;
+  margin: 0;
+}
+
+header h4 {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Navigation styles */
+nav {
+  background-color: White; /* Darker blue color */
+ border-radius: 50px;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 50;
+  padding: 10px 20px;
+  display: flex; /* Use flexbox */
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 20px;
+}
+
+nav ul li:last-child {
+  margin-right: 50; /* Remove margin from the last icon to prevent extra spacing */
+   
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: black; /* White text */
+  font-size: 16px;
+  
+}
+
+/* Main section styles */
+main {
+  padding: 20px;
+  
+}
+
+section {
+  margin-bottom: 90px;
+
+  margin-bottom: 90px;
+  box-shadow: 0 0 20px 5px rgba(0, 0, 255, 0.7); /* Adjust the color and blur radius as needed */
+ padding: 20px;
+}
+  
+}
+
+/* Form styles */
+form {
+  margin-bottom: 50px;
+}
+
+form input[type=""],
+form button {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 50px;
+}
+
+form button {
+  background-color: blue; /* Blue color */
+  color: White; /* White text */
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: Dark; /* Darker blue color */
+}
+
+/* Table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+}
+
+table th {
+  background-color: White;
+}
+
+/* Footer styles */
+footer {
+  background-color: blue; /* Light gray color */
+  padding: 10px;
+  text-align: center;
+}
+button {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 50px;
+background-color: blue; /* Blue color */
+  color: White; /* White text */
+  cursor: pointer;
+background-color: Dark; 
+}
