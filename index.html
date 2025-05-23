@@ -1,92 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Attendance Management System</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
-   
-    <div>
-      <img src="college_logo.png" alt="College Logo">
-      <h1>JERUSALEM COLLEGE OF ENGINEERING</h1>
-      <br>
-      <p>ATTENDANCE MANAGEMENT</p>
-      <br>
-      <p><h4>Department: BE.CSE(AIML)</h4></p>
-    </div>
- <nav>
-      <ul>
-        <li><a href="#addStudent">Add Student</a></li>
-        <li><a href="#takeAttendance">Take Attendance</a></li>
-        <li><a href="#displayAttendance">Display Attendance</a></li>
-      </ul>
-    </nav>
+    <h1>Attendance Management System</h1>
   </header>
 
   <main>
-    <section id="addStudent">
+    <section>
       <h2>Add Student</h2>
-      <form id="addStudentForm">
-        <input type="number" id="studentId" placeholder="Student ID" required>
-        <br>
-        <br>
-        <input type="text" id="studentName" placeholder="Student Name" required>
-        <br>
-        <br>
-        <button type="button" onclick="addStudent()">Add Student</button>
-      </form>
+      <input type="number" id="studentId" placeholder="Student ID">
+      <input type="text" id="studentName" placeholder="Student Name">
+      <button onclick="addStudent()">Add Student</button>
     </section>
 
-    <section id="takeAttendance">
+    <section>
       <h2>Take Attendance</h2>
-      <p>Date: <span id="date"></span></p>
-      <button id="takeAttendanceBtn" onclick="takeAttendance()">Take Attendance</button>
+      <p>Date: <span id="currentDate"></span></p>
+      <button onclick="takeAttendance()">Take Attendance</button>
     </section>
 
-    <section id="displayAttendance">
-      <h2>Display Attendance</h2>
-      <table id="attendanceTable">
+    <section>
+      <h2>Student List</h2>
+      <table>
         <thead>
           <tr>
-            <th>Student ID</th>
-            <th>Student Name</th>
-            <th>Attendance</th>
+            <th>ID</th><th>Name</th><th>Present</th>
           </tr>
         </thead>
-        <tbody id="attendanceBody">
-          <!-- Attendance data rows will be dynamically inserted here -->
-        </tbody>
+        <tbody id="attendanceBody"></tbody>
       </table>
-      <p id="attendancePercentage">Today over all Attendance percentage of AIML class: <span id="percentageValue">0%</span></p>
+      <p>Overall Attendance: <span id="percentageValue">0%</span></p>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2024 SSV mini project. All rights reserved.</p>
+    <p>© 2025 Attendance System</p>
   </footer>
 
   <script src="script.js"></script>
-  <script>
-    // JavaScript to display the current date
-    const currentDate = new Date();
-    const dateElement = document.getElementById('date');
-    dateElement.textContent = currentDate.toLocaleDateString('en-US');
-
-    // Modified takeAttendance function to check if any students are added
-    function takeAttendance() {
-        // Check if any students are added
-        const studentRows = document.querySelectorAll('#attendanceBody tr');
-        if (studentRows.length === 0) {
-            alert('No students added. Please add students before taking attendance.');
-            return;
-        }
-
-        // Proceed with taking attendance
-        // Your existing code to take attendance goes here...
-    }
-  </script>
 </body>
 </html>

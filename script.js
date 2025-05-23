@@ -1,55 +1,76 @@
-// JavaScript code for adding students and taking attendance
+function displayDate() {
+  const currentDate = new Date().toISOString().split('T')[0];
+  document.getElementById('currentDate').textContent = currentDate;
+}
+displayDate();
 
-// Function to add a student
-function addStudent() {
-    const studentIdInput = document.getElementById('studentId');
-    const studentNameInput = document.getElementById('studentName');
-    const studentId = studentIdInput.value.trim();
-    const studentName = studentNameInput.value.trim();
+async function addStudent() {
+  const studentId = document.getElementById('studentId').value;
+  const studentName = document.getElementById('studentName').value;
 
-    // Check if inputs are not empty
-    if (studentId === '' || studentName === '') {
-        alert('Please enter both student ID and name.');
-        return;
-    }
+  if (!studentId || !studentName) {
+    alert("Please enter both Student ID and Name");
+    return;
+  }
 
-    // Create a new row for the student
-    const tableBody = document.getElementById('attendanceBody');
-    const newRow = document.createElement('tr');
-    newRow.innerHTML = `
-        <td>${studentId}</td>
-        <td>${studentName}</td>
-        <td><input type="checkbox" class="attendanceCheckbox" data-student-id="${studentId}"></td>
+  await fetch('/addStudent', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ studentId, studentName })
+  });
+
+  alert("Student added successfully!");
+  loadStudents();
+}
+
+async function loadStudents() {
+  const res = await fetch('/students');
+  const students = await res.json();
+  const tbody = document.getElementById('attendanceBody');
+  tbody.innerHTML = '';
+
+  students.forEach(stu => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${stu.student_id}</td>
+      <td>${stu.student_name}</td>
+      <td><input type="checkbox" class="attendanceCheckbox" data-student-id="${stu.student_id}"></td>
     `;
-    tableBody.appendChild(newRow);
-
-    // Clear input fields after adding student
-    studentIdInput.value = '';
-    studentNameInput.value = '';
+    tbody.appendChild(row);
+  });
 }
 
-// Function to take attendance
-function takeAttendance() {
-    const studentCheckboxes = document.querySelectorAll('.attendanceCheckbox');
-    let presentCount = 0;
+async function takeAttendance() {
+  const date = new Date().toISOString().split('T')[0];
+  const checkboxes = document.querySelectorAll('.attendanceCheckbox');
 
-    // Count the number of present students
-    studentCheckboxes.forEach(checkbox => {
-        if (checkbox.checked) {
-            presentCount++;
-        }
-    });
+  if (checkboxes.length === 0) {
+    alert("No students available.");
+    return;
+  }
 
-    // Calculate attendance percentage
-    const totalStudents = studentCheckboxes.length;
-    const attendancePercentage = (presentCount / totalStudents) * 100;
+  const records = Array.from(checkboxes).map(cb => ({
+    studentId: parseInt(cb.dataset.studentId),
+    present: cb.checked
+  }));
 
-    // Update the attendance percentage display
-    const percentageValue = document.getElementById('percentageValue');
-    percentageValue.textContent = attendancePercentage.toFixed(2) + '%';
+  const res = await fetch('/attendance', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ records, date })
+  });
+
+  const data = await res.json();
+  alert(data.message || "Attendance submitted.");
+  calculateAttendance();
 }
 
-// JavaScript code to display the current date
-const currentDate = new Date();
-const dateElement = document.getElementById('date');
-dateElement.textContent = currentDate.toLocaleDateString('en-US');
+function calculateAttendance() {
+  const checkboxes = document.querySelectorAll('.attendanceCheckbox');
+  const present = Array.from(checkboxes).filter(cb => cb.checked).length;
+  const total = checkboxes.length;
+  const percentage = total ? (present / total) * 100 : 0;
+  document.getElementById('percentageValue').textContent = percentage.toFixed(2) + '%';
+}
+
+window.onload = loadStudents;
